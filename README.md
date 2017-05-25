@@ -9,9 +9,10 @@ Testing out Elm and answering questions like:
 * How do modules work? Can I use Webpack? How do I import modules other than Elm (e.g. img/font assets)?
 * Integrating Bootstrap (elm bootstrap)
 * If Elm can compile to JavaScript, can it be used on the back-end? Would this make any sense?
-* Integrating Reactive Extensions?
+* Integrating Reactive Extensions? [2 minute introduction to Rx](https://medium.com/@andrestaltz/2-minute-introduction-to-rx-24c8ca793877) by Andre Staltz (“Think of an Observable as an asynchronous immutable array.”)
 * Integrating State containers (e.g. Redux)
 * Syntax highlighting in different editors (Webstorm, Sublime)
+* Build process (beyond elm-reactor)
 
 ## Reference
 
@@ -23,7 +24,7 @@ Testing out Elm and answering questions like:
 
 * nvm use 7.10.0
 * installation: `elm package install`
-* run: `elm reactor`
+* run: `elm reactor` (or `elm reactor -p 8100`)
 
 Example Request:
 
@@ -62,3 +63,4 @@ Example Response:
   ]
 }
 ```
+
