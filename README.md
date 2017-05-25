@@ -6,7 +6,8 @@ Testing out Elm and answering questions like:
 
 * How does it integrate into e.g. a pre-existing angular environment?
 * Can I reuse any testing tools like Karma/Testing or is there an alternative?
-* How do modules work? Can I use Webpack? How do I import modules other than Elm (e.g. img/font assets)?
+* How do modules work? Can I use Webpack? How do I import modules other than Elm (e.g. img/font assets)? -> 
+    see https://www.elm-tutorial.org/en/04-starting/03-webpack-1.html
 * Integrating Bootstrap (elm bootstrap)
 * If Elm can compile to JavaScript, can it be used on the back-end? Would this make any sense?
 * Integrating Reactive Extensions? [2 minute introduction to Rx](https://medium.com/@andrestaltz/2-minute-introduction-to-rx-24c8ca793877) by Andre Staltz (“Think of an Observable as an asynchronous immutable array.”)
@@ -25,6 +26,10 @@ Testing out Elm and answering questions like:
 * nvm use 7.10.0
 * installation: `elm package install`
 * run: `elm reactor` (or `elm reactor -p 8100`)
+
+## Use case
+
+Input field that autocompletes search results with a list of images from the Getty API.
 
 Example Request:
 
