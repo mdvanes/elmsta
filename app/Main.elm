@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import Html exposing (Html, div, text, program, button, input)
+import Html exposing (Html, div, text, program, button, input, h1)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Components.Foo exposing (myAdder)
@@ -11,7 +11,12 @@ import Regex
 -- MAIN
 
 main =
-  Html.beginnerProgram { model = model, view = view, update = update }
+  Html.program
+    { init = init
+    , view = view
+    , update = update
+    , subscriptions = subscriptions
+    }
 
 
 -- MODEL
@@ -21,11 +26,12 @@ type alias Model =
     , name: String
     , password: String
     , passwordAgain: String
+    , dieFace : Int
     }
 
-model : Model
-model =
-  Model "" "" "" ""
+init : (Model, Cmd Msg)
+init =
+  (Model "" "" "" "" 1, Cmd.none)
 
 
 -- UPDATE
@@ -33,19 +39,28 @@ type Msg = Change String
     | Name String
     | Password String
     | PasswordAgain String
+    | Roll
 
-update : Msg -> Model -> Model
+update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     Change newContent ->
-      { model | content = newContent }
+      ({ model | content = newContent }, Cmd.none)
     Name name ->
-      { model | name = name }
+      ({ model | name = name }, Cmd.none)
     Password password ->
-      { model | password = password }
+      ({ model | password = password }, Cmd.none)
     PasswordAgain password ->
-      { model | passwordAgain = password }
+      ({ model | passwordAgain = password }, Cmd.none)
+    Roll ->
+      (model, Cmd.none)
 
+
+-- SUBSCRIPTIONS
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+  Sub.none
 
 -- VIEW
 view : Model -> Html Msg
@@ -57,6 +72,8 @@ view model =
     , input [ type_ "password", placeholder "Password", onInput Password ] []
     , input [ type_ "password", placeholder "Re-enter Password", onInput PasswordAgain ] []
     , viewValidation model
+    , h1 [] [text (toString model.dieFace) ]
+    , button [ onClick Roll ] [ text "Roll" ]
     ]
 
 viewValidation : Model -> Html msg
