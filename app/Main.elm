@@ -1,8 +1,10 @@
 module Main exposing (..)
 
-import Html exposing (Html, div, text, program, button, input, h1, img)
+import Html exposing (Html, div, text, program, button, input, h1, img, br)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
+import Http
+import Json.Decode as Decode
 import Components.Foo exposing (myAdder)
 import Random
 import Regex
@@ -44,6 +46,7 @@ type Msg = Change String
     | Roll
     | NewFace Int
     | SearchImages
+    | NewSearchResult (Result Http.Error String)
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -59,10 +62,28 @@ update msg model =
         Roll ->
             (model, Random.generate NewFace (Random.int 1 100))
         NewFace newFace ->
-            (Model "" "" "" "" newFace "" "", Cmd.none)
+            --(Model "" "" "" "" newFace "" "", Cmd.none)
+            ({ model | dieFace = newFace}, Cmd.none)
         SearchImages ->
+            (model, getSearchResult model.termInput)
+        NewSearchResult (Ok newResult) ->
+            ( { model | termResult = newResult }, Cmd.none )
+        NewSearchResult (Err _) ->
             (model, Cmd.none)
 
+getSearchResult : String -> Cmd Msg
+getSearchResult term =
+    let
+        url =
+            "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" ++ term
+        request =
+            Http.get url decodeGifUrl
+    in
+        Http.send NewSearchResult request
+
+decodeGifUrl : Decode.Decoder String
+decodeGifUrl =
+    Decode.at ["data", "image_url"] Decode.string
 
 -- SUBSCRIPTIONS
 subscriptions : Model -> Sub Msg
@@ -83,6 +104,7 @@ view model =
     , button [ onClick Roll ] [ text "Roll 100-sided dice" ]
     , h1 [] [text model.termInput]
     , img [src model.termResult] []
+    , br [] []
     , button [ onClick SearchImages ] [ text "Search Images" ]
     ]
 
