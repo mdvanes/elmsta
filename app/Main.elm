@@ -1,12 +1,11 @@
 module Main exposing (..)
 
-import Html exposing (Html, div, text, program, button, input, h1)
+import Html exposing (Html, div, text, program, button, input, h1, img)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Components.Foo exposing (myAdder)
 import Random
 import Regex
-
 
 
 -- MAIN
@@ -28,11 +27,13 @@ type alias Model =
     , password: String
     , passwordAgain: String
     , dieFace : Int
+    , termInput : String
+    , termResult : String
     }
 
 init : (Model, Cmd Msg)
 init =
-  (Model "" "" "" "" 1, Cmd.none)
+  (Model "" "" "" "" 1 "cats" "waiting.gif", Cmd.none)
 
 
 -- UPDATE
@@ -42,6 +43,7 @@ type Msg = Change String
     | PasswordAgain String
     | Roll
     | NewFace Int
+    | SearchImages
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -55,15 +57,17 @@ update msg model =
         PasswordAgain password ->
             ({ model | passwordAgain = password }, Cmd.none)
         Roll ->
-            (model, Random.generate NewFace (Random.int 1 6))
+            (model, Random.generate NewFace (Random.int 1 100))
         NewFace newFace ->
-            (Model "" "" "" "" newFace, Cmd.none)
+            (Model "" "" "" "" newFace "" "", Cmd.none)
+        SearchImages ->
+            (model, Cmd.none)
+
 
 -- SUBSCRIPTIONS
-
 subscriptions : Model -> Sub Msg
 subscriptions model =
-  Sub.none
+    Sub.none
 
 -- VIEW
 view : Model -> Html Msg
@@ -76,7 +80,10 @@ view model =
     , input [ type_ "password", placeholder "Re-enter Password", onInput PasswordAgain ] []
     , viewValidation model
     , h1 [] [text (toString model.dieFace) ]
-    , button [ onClick Roll ] [ text "Roll" ]
+    , button [ onClick Roll ] [ text "Roll 100-sided dice" ]
+    , h1 [] [text model.termInput]
+    , img [src model.termResult] []
+    , button [ onClick SearchImages ] [ text "Search Images" ]
     ]
 
 viewValidation : Model -> Html msg
