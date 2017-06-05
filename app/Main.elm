@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import Html exposing (Html, div, text, program, button, input, h1, img, br)
+import Html exposing (Html, div, text, program, button, input, h1, img, br, ul, li)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Http
@@ -30,12 +30,12 @@ type alias Model =
     , passwordAgain: String
     , dieFace : Int
     , termInput : String
-    , termResult : String
+    , termResult : List String
     }
 
 init : (Model, Cmd Msg)
 init =
-  (Model "" "" "" "" 1 "cats" "waiting.gif", Cmd.none)
+  (Model "" "" "" "" 1 "Elm" [""], Cmd.none)
 
 
 -- UPDATE
@@ -46,7 +46,7 @@ type Msg = Change String
     | Roll
     | NewFace Int
     | SearchImages
-    | NewSearchResult (Result Http.Error String)
+    | NewSearchResult (Result Http.Error (List String))
     | ChangeTermInput String
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -78,15 +78,29 @@ getSearchResult : String -> Cmd Msg
 getSearchResult term =
     let
         url =
-            "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" ++ term
+            -- Giphy random
+            -- "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" ++ term
+            -- Instagram API - requires authentication: https://www.instagram.com/developer/
+            -- Wikipedia
+            --"https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=" ++ term
+            -- Wikipedia CORS - `https://cors-anywhere.herokuapp.com/en.wikipedia.org:443/w/api.php?action=query&format=json&list=search&srsearch=${encodeURI(term)}`
+            "https://cors-anywhere.herokuapp.com/en.wikipedia.org:443/w/api.php?action=query&format=json&list=search&srsearch=" ++ term
         request =
-            Http.get url decodeGifUrl
+            Http.get url decodeWikipediaResults
     in
         Http.send NewSearchResult request
 
 decodeGifUrl : Decode.Decoder String
 decodeGifUrl =
     Decode.at ["data", "image_url"] Decode.string
+
+decodeWikipediaResults : Decode.Decoder (List String)
+decodeWikipediaResults =
+    -- data.detail.response.query.search
+    -- works on elm repl: decodeString (field "query" (field "search" string)) """{"query": {"search": "bla"} } """
+    -- works on elm repl: decodeString (field "query" (field "search" (list (field "title" string)))) """{"query": {"search": [{"title": "bla"}]} } """
+    -- Decode.at ["query", "search"] Decode.string
+    Decode.field "query" (Decode.field "search" (Decode.list (Decode.field "title" Decode.string)))
 
 -- SUBSCRIPTIONS
 subscriptions : Model -> Sub Msg
@@ -108,10 +122,19 @@ view model =
     , h1 [] [text (String.append "Searching " model.termInput)]
     , input [placeholder "Elmsta search term", onInput ChangeTermInput, value model.termInput] []
     , br [] []
-    , img [src model.termResult] []
+    -- , img [src model.termResult] []
+    , div [] [ text (String.join ";" model.termResult) ]
+    , viewTermResultList model
     , br [] []
-    , button [ onClick SearchImages ] [ text "Search Images" ]
+    , button [ onClick SearchImages ] [ text "Search Wiki" ]
     ]
+
+viewTermResultList : Model -> Html msg
+viewTermResultList model =
+  let
+    items = List.map (\l -> li [] [ text l ]) model.termResult
+  in
+    ul [] items
 
 viewValidation : Model -> Html msg
 viewValidation model =

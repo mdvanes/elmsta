@@ -16,6 +16,7 @@ Testing out Elm and answering questions like:
 * Build process (beyond elm-reactor)
 * test time travel debug (elm native)
 * test Elm Js interop
+* String interpolation possible?
 
 ## Reference
 
