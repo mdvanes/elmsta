@@ -4,54 +4,8 @@ import Html exposing (Html, div, text, program, button, input)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Components.Foo exposing (myAdder)
+import Regex
 
--- resume tutorial at: Foundations / Union Types
-
--- main =
---    text (toString(myAdder 1 2))
-
-
--- type alias Model =
---     String
---
--- init : ( Model, Cmd Msg )
--- init =
---     ( "Hello", Cmd.none )
---
--- type Msg
---     = NoOp
---     , Change String
---
--- -- VIEW
--- view : Model -> Html Msg
--- view model =
---     div []
---         [ input [ placeholder "search elmstragrams", onInput NoOp ] []
---         , button [ onClick NoOp ] [ text "search" ]
---         , text "hello"
---         ]
---
--- -- UPDATE
--- update : Msg -> Model -> ( Model, Cmd Msg )
--- update msg model =
---     case msg of
---         NoOp ->
---             ( model, Cmd.none )
---
--- -- SUBSCRIPTIONS
--- subscriptions : Model -> Sub Msg
--- subscriptions model =
---     Sub.none
---
--- -- MAIN
--- main : Program Never Model Msg
--- main =
---     program
---         { init = init
---         , view = view
---         , update = update
---         , subscriptions = subscriptions
---         }
 
 
 -- MAIN
@@ -64,22 +18,33 @@ main =
 
 type alias Model =
     { content : String
+    , name: String
+    , password: String
+    , passwordAgain: String
     }
 
 model : Model
 model =
-  { content = "" }
+  Model "" "" "" ""
 
 
 -- UPDATE
-type Msg =
-    Change String
+type Msg = Change String
+    | Name String
+    | Password String
+    | PasswordAgain String
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
     Change newContent ->
       { model | content = newContent }
+    Name name ->
+      { model | name = name }
+    Password password ->
+      { model | password = password }
+    PasswordAgain password ->
+      { model | passwordAgain = password }
 
 
 -- VIEW
@@ -88,4 +53,23 @@ view model =
   div []
     [ input [placeholder "Elmsta", onInput Change] []
     , div [] [ text (String.reverse model.content) ]
+    , input [ type_ "text", placeholder "Name", onInput Name ] []
+    , input [ type_ "password", placeholder "Password", onInput Password ] []
+    , input [ type_ "password", placeholder "Re-enter Password", onInput PasswordAgain ] []
+    , viewValidation model
     ]
+
+viewValidation : Model -> Html msg
+viewValidation model =
+  let
+    (color, message) =
+      if Regex.contains (Regex.regex "[=!-]") model.password then
+        ("red", "Passwords must contain not contain: =, !, -")
+      else if (String.length model.password) <= 8 then
+        ("red", "Passwords must be longer than 8 chars")
+      else if model.password /= model.passwordAgain then
+        ("red", "Passwords do not match!")
+      else
+        ("green", "OK")
+  in
+    div [ style [("color", color)] ] [ text message ]
