@@ -47,6 +47,7 @@ type Msg = Change String
     | NewFace Int
     | SearchImages
     | NewSearchResult (Result Http.Error String)
+    | ChangeTermInput String
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -70,6 +71,8 @@ update msg model =
             ( { model | termResult = newResult }, Cmd.none )
         NewSearchResult (Err _) ->
             (model, Cmd.none)
+        ChangeTermInput term ->
+            ({ model | termInput = term}, Cmd.none)
 
 getSearchResult : String -> Cmd Msg
 getSearchResult term =
@@ -102,7 +105,9 @@ view model =
     , viewValidation model
     , h1 [] [text (toString model.dieFace) ]
     , button [ onClick Roll ] [ text "Roll 100-sided dice" ]
-    , h1 [] [text model.termInput]
+    , h1 [] [text (String.append "Searching " model.termInput)]
+    , input [placeholder "Elmsta search term", onInput ChangeTermInput, value model.termInput] []
+    , br [] []
     , img [src model.termResult] []
     , br [] []
     , button [ onClick SearchImages ] [ text "Search Images" ]
