@@ -1,5 +1,7 @@
 # Elmsta
 
+Compiled page is hosted on: https://mdvanes.github.io/elmsta/
+
 ## Purpose
 
 Testing out Elm and answering questions like:
