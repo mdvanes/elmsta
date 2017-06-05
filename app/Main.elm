@@ -9,6 +9,7 @@ import Components.Foo exposing (myAdder)
 import Random
 import Regex
 
+-- Continue tutorial at Effects/Time
 
 -- MAIN
 
@@ -119,11 +120,11 @@ view model =
     , viewValidation model
     , h1 [] [text (toString model.dieFace) ]
     , button [ onClick Roll ] [ text "Roll 100-sided dice" ]
-    , h1 [] [text (String.append "Searching " model.termInput)]
+    , h1 [ style[("font-family", "sans-serif")] ] [text (String.append "Searching " model.termInput)]
     , input [placeholder "Elmsta search term", onInput ChangeTermInput, value model.termInput] []
     , br [] []
     -- , img [src model.termResult] []
-    , div [] [ text (String.join ";" model.termResult) ]
+    -- , div [] [ text (String.join ";" model.termResult) ]
     , viewTermResultList model
     , br [] []
     , button [ onClick SearchImages ] [ text "Search Wiki" ]
@@ -134,7 +135,7 @@ viewTermResultList model =
   let
     items = List.map (\l -> li [] [ text l ]) model.termResult
   in
-    ul [] items
+    ul [ style[("color", "#887c7c"), ("font-family", "sans-serif")] ] items
 
 viewValidation : Model -> Html msg
 viewValidation model =
