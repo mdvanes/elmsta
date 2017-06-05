@@ -4,6 +4,7 @@ import Html exposing (Html, div, text, program, button, input, h1)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Components.Foo exposing (myAdder)
+import Random
 import Regex
 
 
@@ -40,21 +41,23 @@ type Msg = Change String
     | Password String
     | PasswordAgain String
     | Roll
+    | NewFace Int
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
-  case msg of
-    Change newContent ->
-      ({ model | content = newContent }, Cmd.none)
-    Name name ->
-      ({ model | name = name }, Cmd.none)
-    Password password ->
-      ({ model | password = password }, Cmd.none)
-    PasswordAgain password ->
-      ({ model | passwordAgain = password }, Cmd.none)
-    Roll ->
-      (model, Cmd.none)
-
+    case msg of
+        Change newContent ->
+            ({ model | content = newContent }, Cmd.none)
+        Name name ->
+            ({ model | name = name }, Cmd.none)
+        Password password ->
+            ({ model | password = password }, Cmd.none)
+        PasswordAgain password ->
+            ({ model | passwordAgain = password }, Cmd.none)
+        Roll ->
+            (model, Random.generate NewFace (Random.int 1 6))
+        NewFace newFace ->
+            (Model "" "" "" "" newFace, Cmd.none)
 
 -- SUBSCRIPTIONS
 
