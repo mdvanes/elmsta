@@ -14,6 +14,8 @@ Testing out Elm and answering questions like:
 * Integrating State containers (e.g. Redux)
 * Syntax highlighting in different editors (Webstorm, Sublime)
 * Build process (beyond elm-reactor)
+* test time travel debug (elm native)
+* test Elm Js interop
 
 ## Reference
 
@@ -23,7 +25,8 @@ Testing out Elm and answering questions like:
 
 ## Run development
 
-* nvm use 7.10.0
+* nvm use 8.0.0
+* `npm install -g elm`
 * installation: `elm package install`
 * run: `elm reactor` (or `elm reactor -p 8100`)
 
@@ -69,3 +72,12 @@ Example Response:
 }
 ```
 
+TODO
+
+* styling
+* add input element that responds to keydown
+* fetch results from API
+* subscribe to changes from the API
+* render the result
+* webpack
+* unit tests

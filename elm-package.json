@@ -1,6 +1,6 @@
 {
     "version": "1.0.0",
-    "summary": "Elmsta",
+    "summary": "Elmsta - photo feed",
     "repository": "https://github.com/mdvanes/elmsta.git",
     "license": "MIT",
     "source-directories": [
