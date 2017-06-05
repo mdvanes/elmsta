@@ -53,41 +53,39 @@ import Components.Foo exposing (myAdder)
 --         , subscriptions = subscriptions
 --         }
 
+
 -- MAIN
 
 main =
   Html.beginnerProgram { model = model, view = view, update = update }
 
+
 -- MODEL
 
-type alias Model = Int
+type alias Model =
+    { content : String
+    }
 
 model : Model
 model =
-  0
+  { content = "" }
 
 
 -- UPDATE
-type Msg = Increment | Decrement | Reset
+type Msg =
+    Change String
 
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Increment ->
-      model + 1
-    Decrement ->
-      model - 1
-    Reset ->
-      0
-
+    Change newContent ->
+      { model | content = newContent }
 
 
 -- VIEW
 view : Model -> Html Msg
 view model =
   div []
-    [ button [ onClick Decrement ] [ text "-" ]
-    , div [] [ text (toString model) ]
-    , button [ onClick Increment ] [ text "+" ]
-    , button [ onClick Reset ] [ text "reset" ]
+    [ input [placeholder "Elmsta", onInput Change] []
+    , div [] [ text (String.reverse model.content) ]
     ]
