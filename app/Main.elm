@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import Html exposing (Html, div, text, program, button, input, h1, img, br, ul, li)
+import Html exposing (Html, div, text, program, button, input, h1, img, br, ul, li, a)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Http
@@ -112,7 +112,16 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
   div []
-    [ input [placeholder "Elmsta", onInput Change] []
+    [ a [ href "https://github.com/mdvanes/elmsta" ]
+        [ img
+            [ src "https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+            , style[("position", "absolute"), ("top", "0"), ("right", "0"), ("border", "0")]
+            , alt "Fork me on GitHub"
+            , attribute "data-canonical-src" "https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
+            ]
+            []
+        ]
+    , input [placeholder "Elmsta", onInput Change] []
     , div [] [ text (String.reverse model.content) ]
     , input [ type_ "text", placeholder "Name", onInput Name ] []
     , input [ type_ "password", placeholder "Password", onInput Password ] []
