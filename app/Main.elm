@@ -28,19 +28,23 @@ main =
 
 -- MODEL
 
+type alias DiceRoller = {
+    dieFace : Int
+    }
+
 type alias Model =
     { content : String
     , name: String
     , password: String
     , passwordAgain: String
-    , dieFace : Int
+    , diceRoller : DiceRoller
     , termInput : String
     , termResult : List String
     }
 
 init : (Model, Cmd Msg)
 init =
-  (Model "" "" "" "" 1 "Elm" [], Cmd.none)
+  (Model "" "" "" "" (DiceRoller 1) "Elm" [], Cmd.none)
 
 
 -- UPDATE
@@ -69,7 +73,7 @@ update msg model =
             (model, Random.generate NewFace (Random.int 1 100))
         NewFace newFace ->
             --(Model "" "" "" "" newFace "" "", Cmd.none)
-            ({ model | dieFace = newFace}, Cmd.none)
+            ({ model | diceRoller = { dieFace = newFace} }, Cmd.none)
         SearchImages ->
             (model, getSearchResult model.termInput)
         NewSearchResult (Ok newResult) ->
@@ -135,7 +139,7 @@ view model =
         , viewValidation model
         ]
     , viewPanel [ button [ onClick Roll ] [ text "Roll 100-sided dice" ]
-        , h2 [] [text (toString model.dieFace) ]
+        , h2 [] [text (toString model.diceRoller.dieFace) ]
         ]
     , viewPanel [ h2 [ style[("font-family", "sans-serif")] ] [text (String.append "Searching " model.termInput)]
         , input [placeholder "Elmsta search term", onInput ChangeTermInput, value model.termInput] []
