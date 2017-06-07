@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import Html exposing (Html, div, text, program, button, input, h1, img, br, ul, li, a)
+import Html exposing (Html, div, text, program, button, input, h1, h2, img, br, ul, li, a, section)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Http
@@ -10,6 +10,10 @@ import Random
 import Regex
 
 -- Continue tutorial at Effects/Time
+
+-- Not possible at the moment: https://groups.google.com/forum/#!topic/elm-discuss/khUMddCweEw
+--port title : String
+--port title = "Test"
 
 -- MAIN
 
@@ -36,7 +40,7 @@ type alias Model =
 
 init : (Model, Cmd Msg)
 init =
-  (Model "" "" "" "" 1 "Elm" [""], Cmd.none)
+  (Model "" "" "" "" 1 "Elm" [], Cmd.none)
 
 
 -- UPDATE
@@ -121,23 +125,36 @@ view model =
             ]
             []
         ]
-    , input [placeholder "Elmsta", onInput Change] []
-    , div [] [ text (String.reverse model.content) ]
-    , input [ type_ "text", placeholder "Name", onInput Name ] []
-    , input [ type_ "password", placeholder "Password", onInput Password ] []
-    , input [ type_ "password", placeholder "Re-enter Password", onInput PasswordAgain ] []
-    , viewValidation model
-    , h1 [] [text (toString model.dieFace) ]
-    , button [ onClick Roll ] [ text "Roll 100-sided dice" ]
-    , h1 [ style[("font-family", "sans-serif")] ] [text (String.append "Searching " model.termInput)]
-    , input [placeholder "Elmsta search term", onInput ChangeTermInput, value model.termInput] []
-    , br [] []
-    -- , img [src model.termResult] []
-    -- , div [] [ text (String.join ";" model.termResult) ]
-    , viewTermResultList model
-    , br [] []
-    , button [ onClick SearchImages ] [ text "Search Wiki" ]
+    , h1 [ style[("font-family", "sans-serif"), ("margin", "1rem")] ] [text "Elm Test Page"]
+    , viewPanel [ input [placeholder "Elmsta", onInput Change] []
+        , div [] [ text (String.reverse model.content) ]
+        ]
+    , viewPanel [ input [ type_ "text", placeholder "Name", onInput Name ] []
+        , input [ type_ "password", placeholder "Password", onInput Password ] []
+        , input [ type_ "password", placeholder "Re-enter Password", onInput PasswordAgain ] []
+        , viewValidation model
+        ]
+    , viewPanel [ button [ onClick Roll ] [ text "Roll 100-sided dice" ]
+        , h2 [] [text (toString model.dieFace) ]
+        ]
+    , viewPanel [ h2 [ style[("font-family", "sans-serif")] ] [text (String.append "Searching " model.termInput)]
+        , input [placeholder "Elmsta search term", onInput ChangeTermInput, value model.termInput] []
+        , br [] []
+        -- , img [src model.termResult] []
+        -- , div [] [ text (String.join ";" model.termResult) ]
+        , viewTermResultList model
+        , br [] []
+        , button [ onClick SearchImages ] [ text "Search Wiki" ]
+        ]
     ]
+
+viewPanel : List (Html msg) -> Html msg
+viewPanel msg =
+    section [ style[ ("border", "1px solid black")
+        , ("background-color", "aliceblue")
+        , ("margin", "1rem")
+        , ("padding", "1.5rem")
+        ] ] msg
 
 viewTermResultList : Model -> Html msg
 viewTermResultList model =
@@ -159,4 +176,4 @@ viewValidation model =
       else
         ("green", "OK")
   in
-    div [ style [("color", color)] ] [ text message ]
+    div [ style [("color", color), ("font-family", "sans-serif")] ] [ text message ]

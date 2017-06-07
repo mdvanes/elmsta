@@ -78,10 +78,17 @@ Example Response:
 
 TODO
 
-* styling
+* DONE link back to github (side banner/fork me on github)
+
+* refactor https://medium.com/@_rchaves_/structured-todomvc-example-with-elm-a68d87cd38da
 * add input element that responds to keydown
 * fetch results from API
 * subscribe to changes from the API
 * render the result
 * webpack
 * unit tests
+
+* search on key up (reactively)
+* reactive test/excel example
+* page title -> "Elmsta (Elm Demo)"
+* websockets
