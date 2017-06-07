@@ -87,7 +87,6 @@ TODO
 * render the result
 * webpack
 * unit tests
-
 * search on key up (reactively)
 * reactive test/excel example
 * page title -> "Elmsta (Elm Demo)"
