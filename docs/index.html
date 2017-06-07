@@ -9532,7 +9532,11 @@ var _mdvanes$elmsta$Main$viewValidation = function (model) {
 				{
 					ctor: '::',
 					_0: {ctor: '_Tuple2', _0: 'color', _1: color},
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'font-family', _1: 'sans-serif'},
+						_1: {ctor: '[]'}
+					}
 				}),
 			_1: {ctor: '[]'}
 		},
@@ -9574,6 +9578,33 @@ var _mdvanes$elmsta$Main$viewTermResultList = function (model) {
 		},
 		items);
 };
+var _mdvanes$elmsta$Main$viewPanel = function (msg) {
+	return A2(
+		_elm_lang$html$Html$section,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$style(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'border', _1: '1px solid black'},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'aliceblue'},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'margin', _1: '1rem'},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'padding', _1: '1.5rem'},
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}),
+			_1: {ctor: '[]'}
+		},
+		msg);
+};
 var _mdvanes$elmsta$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
@@ -9611,11 +9642,7 @@ var _mdvanes$elmsta$Main$init = {
 		'',
 		1,
 		'Elm',
-		{
-			ctor: '::',
-			_0: '',
-			_1: {ctor: '[]'}
-		}),
+		{ctor: '[]'}),
 	_1: _elm_lang$core$Platform_Cmd$none
 };
 var _mdvanes$elmsta$Main$ChangeTermInput = function (a) {
@@ -9734,186 +9761,281 @@ var _mdvanes$elmsta$Main$view = function (model) {
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$input,
+				_elm_lang$html$Html$a,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$placeholder('Elmsta'),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$html$Html_Events$onInput(_mdvanes$elmsta$Main$Change),
-						_1: {ctor: '[]'}
-					}
+					_0: _elm_lang$html$Html_Attributes$href('https://github.com/mdvanes/elmsta'),
+					_1: {ctor: '[]'}
 				},
-				{ctor: '[]'}),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$div,
-					{ctor: '[]'},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text(
-							_elm_lang$core$String$reverse(model.content)),
-						_1: {ctor: '[]'}
-					}),
-				_1: {
+				{
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$input,
+						_elm_lang$html$Html$img,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$type_('text'),
+							_0: _elm_lang$html$Html_Attributes$src('https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67'),
 							_1: {
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$placeholder('Name'),
+								_0: _elm_lang$html$Html_Attributes$style(
+									{
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'position', _1: 'absolute'},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'top', _1: '0'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'right', _1: '0'},
+												_1: {
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'border', _1: '0'},
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Events$onInput(_mdvanes$elmsta$Main$Name),
-									_1: {ctor: '[]'}
+									_0: _elm_lang$html$Html_Attributes$alt('Fork me on GitHub'),
+									_1: {
+										ctor: '::',
+										_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-canonical-src', 'https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png'),
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						},
 						{ctor: '[]'}),
-					_1: {
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$h1,
+					{
 						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$input,
+						_0: _elm_lang$html$Html_Attributes$style(
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$type_('password'),
+								_0: {ctor: '_Tuple2', _0: 'font-family', _1: 'sans-serif'},
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$placeholder('Password'),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onInput(_mdvanes$elmsta$Main$Password),
-										_1: {ctor: '[]'}
-									}
+									_0: {ctor: '_Tuple2', _0: 'margin', _1: '1rem'},
+									_1: {ctor: '[]'}
 								}
-							},
-							{ctor: '[]'}),
-						_1: {
+							}),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Elm Test Page'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: _mdvanes$elmsta$Main$viewPanel(
+						{
 							ctor: '::',
 							_0: A2(
 								_elm_lang$html$Html$input,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$type_('password'),
+									_0: _elm_lang$html$Html_Attributes$placeholder('Elmsta'),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$placeholder('Re-enter Password'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Events$onInput(_mdvanes$elmsta$Main$PasswordAgain),
-											_1: {ctor: '[]'}
-										}
+										_0: _elm_lang$html$Html_Events$onInput(_mdvanes$elmsta$Main$Change),
+										_1: {ctor: '[]'}
 									}
 								},
 								{ctor: '[]'}),
 							_1: {
 								ctor: '::',
-								_0: _mdvanes$elmsta$Main$viewValidation(model),
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(
+											_elm_lang$core$String$reverse(model.content)),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _mdvanes$elmsta$Main$viewPanel(
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$input,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$type_('text'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$placeholder('Name'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onInput(_mdvanes$elmsta$Main$Name),
+												_1: {ctor: '[]'}
+											}
+										}
+									},
+									{ctor: '[]'}),
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_elm_lang$html$Html$h1,
-										{ctor: '[]'},
+										_elm_lang$html$Html$input,
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text(
-												_elm_lang$core$Basics$toString(model.dieFace)),
+											_0: _elm_lang$html$Html_Attributes$type_('password'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$placeholder('Password'),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Events$onInput(_mdvanes$elmsta$Main$Password),
+													_1: {ctor: '[]'}
+												}
+											}
+										},
+										{ctor: '[]'}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$input,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$type_('password'),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$placeholder('Re-enter Password'),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Events$onInput(_mdvanes$elmsta$Main$PasswordAgain),
+														_1: {ctor: '[]'}
+													}
+												}
+											},
+											{ctor: '[]'}),
+										_1: {
+											ctor: '::',
+											_0: _mdvanes$elmsta$Main$viewValidation(model),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}),
+						_1: {
+							ctor: '::',
+							_0: _mdvanes$elmsta$Main$viewPanel(
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$button,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(_mdvanes$elmsta$Main$Roll),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Roll 100-sided dice'),
 											_1: {ctor: '[]'}
 										}),
 									_1: {
 										ctor: '::',
 										_0: A2(
-											_elm_lang$html$Html$button,
+											_elm_lang$html$Html$h2,
+											{ctor: '[]'},
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html_Events$onClick(_mdvanes$elmsta$Main$Roll),
+												_0: _elm_lang$html$Html$text(
+													_elm_lang$core$Basics$toString(model.dieFace)),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {
+								ctor: '::',
+								_0: _mdvanes$elmsta$Main$viewPanel(
+									{
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$h2,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$style(
+													{
+														ctor: '::',
+														_0: {ctor: '_Tuple2', _0: 'font-family', _1: 'sans-serif'},
+														_1: {ctor: '[]'}
+													}),
 												_1: {ctor: '[]'}
 											},
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html$text('Roll 100-sided dice'),
+												_0: _elm_lang$html$Html$text(
+													A2(_elm_lang$core$String$append, 'Searching ', model.termInput)),
 												_1: {ctor: '[]'}
 											}),
 										_1: {
 											ctor: '::',
 											_0: A2(
-												_elm_lang$html$Html$h1,
+												_elm_lang$html$Html$input,
 												{
 													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$style(
-														{
+													_0: _elm_lang$html$Html_Attributes$placeholder('Elmsta search term'),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Events$onInput(_mdvanes$elmsta$Main$ChangeTermInput),
+														_1: {
 															ctor: '::',
-															_0: {ctor: '_Tuple2', _0: 'font-family', _1: 'sans-serif'},
+															_0: _elm_lang$html$Html_Attributes$value(model.termInput),
 															_1: {ctor: '[]'}
-														}),
-													_1: {ctor: '[]'}
+														}
+													}
 												},
-												{
-													ctor: '::',
-													_0: _elm_lang$html$Html$text(
-														A2(_elm_lang$core$String$append, 'Searching ', model.termInput)),
-													_1: {ctor: '[]'}
-												}),
+												{ctor: '[]'}),
 											_1: {
 												ctor: '::',
 												_0: A2(
-													_elm_lang$html$Html$input,
-													{
-														ctor: '::',
-														_0: _elm_lang$html$Html_Attributes$placeholder('Elmsta search term'),
-														_1: {
-															ctor: '::',
-															_0: _elm_lang$html$Html_Events$onInput(_mdvanes$elmsta$Main$ChangeTermInput),
-															_1: {
-																ctor: '::',
-																_0: _elm_lang$html$Html_Attributes$value(model.termInput),
-																_1: {ctor: '[]'}
-															}
-														}
-													},
+													_elm_lang$html$Html$br,
+													{ctor: '[]'},
 													{ctor: '[]'}),
 												_1: {
 													ctor: '::',
-													_0: A2(
-														_elm_lang$html$Html$br,
-														{ctor: '[]'},
-														{ctor: '[]'}),
+													_0: _mdvanes$elmsta$Main$viewTermResultList(model),
 													_1: {
 														ctor: '::',
-														_0: _mdvanes$elmsta$Main$viewTermResultList(model),
+														_0: A2(
+															_elm_lang$html$Html$br,
+															{ctor: '[]'},
+															{ctor: '[]'}),
 														_1: {
 															ctor: '::',
 															_0: A2(
-																_elm_lang$html$Html$br,
-																{ctor: '[]'},
-																{ctor: '[]'}),
-															_1: {
-																ctor: '::',
-																_0: A2(
-																	_elm_lang$html$Html$button,
-																	{
-																		ctor: '::',
-																		_0: _elm_lang$html$Html_Events$onClick(_mdvanes$elmsta$Main$SearchImages),
-																		_1: {ctor: '[]'}
-																	},
-																	{
-																		ctor: '::',
-																		_0: _elm_lang$html$Html$text('Search Wiki'),
-																		_1: {ctor: '[]'}
-																	}),
-																_1: {ctor: '[]'}
-															}
+																_elm_lang$html$Html$button,
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Events$onClick(_mdvanes$elmsta$Main$SearchImages),
+																	_1: {ctor: '[]'}
+																},
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html$text('Search Wiki'),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {ctor: '[]'}
 														}
 													}
 												}
 											}
 										}
-									}
-								}
+									}),
+								_1: {ctor: '[]'}
 							}
 						}
 					}
