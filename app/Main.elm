@@ -129,9 +129,19 @@ view model =
         [ CDN.stylesheet
         , div []
             [ h1 [ style[("font-family", "sans-serif"), ("margin", "1rem")] ] [text "Elm Test Page"]
-            , viewPanel [ input [placeholder "Reverse text", onInput Change] []
-            , div [] [ text (String.reverse model.content) ]
-            ]
+            , viewPanel
+                [ Grid.row []
+                    [ Grid.col [ Col.xs12, Col.md6 ]
+                        [ Form.group []
+                            [ Input.text [ Input.attrs 
+                                [ placeholder "Reverse text"
+                                , onInput Change ] ] 
+                            ]
+                        ]
+                    , Grid.col [ Col.xs12, Col.md6 ]
+                        [ text (String.reverse model.content) ]
+                    ]
+                ]
         , viewPanel 
             [ Grid.row []
                 [ Grid.col [ Col.xs12, Col.md6 ]
