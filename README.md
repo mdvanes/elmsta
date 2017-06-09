@@ -32,7 +32,8 @@ Testing out Elm and answering questions like:
 * `npm install -g elm`
 * installation: `elm package install`
 * run: `elm reactor` (or `elm reactor -p 8100`)
-* build for production: `elm make app/Main.elm --output=docs/index.html`
+* build module for production: `elm make app/Main.elm --output=docs/main.js`
+* build HTML for production: `elm make app/Main.elm --output=docs/test.html`
 
 ## Use case
 
