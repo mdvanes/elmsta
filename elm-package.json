@@ -4,7 +4,8 @@
     "repository": "https://github.com/mdvanes/elmsta.git",
     "license": "MIT",
     "source-directories": [
-        "app"
+        "app",
+        "app/src"
     ],
     "exposed-modules": [],
     "dependencies": {

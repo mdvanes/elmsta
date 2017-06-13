@@ -6,8 +6,13 @@ import Html.Events exposing (onClick, onInput)
 import Http
 import Json.Decode as Decode
 import Components.Foo exposing (myAdder)
-import Random
 import Regex
+
+import Msg as Main exposing (..)
+
+import DiceRoller.Model exposing (..)
+import DiceRoller.Msg exposing (..)
+import DiceRoller.Update exposing (..)
 
 import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
@@ -35,11 +40,6 @@ main =
 
 
 -- MODEL
-
-type alias DiceRoller = {
-    dieFace : Int
-    }
-
 type alias Model =
     { content : String
     , name: String
@@ -52,39 +52,10 @@ type alias Model =
 
 init : (Model, Cmd Msg)
 init =
-  (Model "" "" "" "" (DiceRoller 1) "Elm" [], Cmd.none)
+  (Model "" "" "" "" newDiceRoller "Elm" [], Cmd.none)
 
 
 -- UPDATE
-type DiceRollerMsg = Roll
-    | NewFace Int
-
-type Msg = Change String
-    | Name String
-    | Password String
-    | PasswordAgain String
-    | MsgForDiceRoller DiceRollerMsg
-    | SearchImages
-    | NewSearchResult (Result Http.Error (List String))
-    | ChangeTermInput String
-
-updateDiceRoller : DiceRollerMsg -> DiceRoller -> DiceRoller
-updateDiceRoller msg model =
-    case msg of
-        Roll ->
-            model
-        NewFace newFace ->
-            { model | dieFace = newFace}
-
-updateDiceRollerCmd : Msg -> Cmd Msg
-updateDiceRollerCmd msg =
-    case msg of
-        MsgForDiceRoller Roll ->
-            Random.generate NewFace (Random.int 1 100)
-                |> Cmd.map MsgForDiceRoller
-        _ ->
-            Cmd.none
-
 updateCmd : Msg -> Model -> Cmd Msg
 updateCmd msg model =
     Cmd.batch
@@ -194,6 +165,7 @@ view model =
                 ]
             , viewValidation model
             ]
+        -- TODO extract DiceRoller view
         , viewPanel [ button [ onClick (MsgForDiceRoller Roll) ] [ text "Roll 100-sided dice" ]
             , h2 [] [text (toString model.diceRoller.dieFace) ]
             ]
