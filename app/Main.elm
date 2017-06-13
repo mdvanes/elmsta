@@ -79,9 +79,10 @@ updateDiceRoller msg model =
 updateDiceRollerCmd : Msg -> Cmd Msg
 updateDiceRollerCmd msg =
     case msg of
-        Roll ->
+        MsgForDiceRoller Roll ->
             Random.generate NewFace (Random.int 1 100)
-        NewFace newFace ->
+                |> Cmd.map MsgForDiceRoller
+        _ ->
             Cmd.none
 
 updateCmd : Msg -> Model -> Cmd Msg
@@ -193,7 +194,7 @@ view model =
                 ]
             , viewValidation model
             ]
-        , viewPanel [ button [ onClick Roll ] [ text "Roll 100-sided dice" ]
+        , viewPanel [ button [ onClick (MsgForDiceRoller Roll) ] [ text "Roll 100-sided dice" ]
             , h2 [] [text (toString model.diceRoller.dieFace) ]
             ]
         , viewPanel [ h2 [ style[("font-family", "sans-serif")] ] [text (String.append "Searching " model.termInput)]
