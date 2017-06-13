@@ -56,40 +56,66 @@ init =
 
 
 -- UPDATE
+type DiceRollerMsg = Roll
+    | NewFace Int
+
 type Msg = Change String
     | Name String
     | Password String
     | PasswordAgain String
-    | Roll
-    | NewFace Int
+    | MsgForDiceRoller DiceRollerMsg
     | SearchImages
     | NewSearchResult (Result Http.Error (List String))
     | ChangeTermInput String
 
-update : Msg -> Model -> (Model, Cmd Msg)
-update msg model =
+updateDiceRoller : DiceRollerMsg -> DiceRoller -> DiceRoller
+updateDiceRoller msg model =
+    case msg of
+        Roll ->
+            model
+        NewFace newFace ->
+            { model | dieFace = newFace}
+
+updateDiceRollerCmd : Msg -> Cmd Msg
+updateDiceRollerCmd msg =
+    case msg of
+        Roll ->
+            Random.generate NewFace (Random.int 1 100)
+        NewFace newFace ->
+            Cmd.none
+
+updateCmd : Msg -> Model -> Cmd Msg
+updateCmd msg model =
+    Cmd.batch
+        [ updateDiceRollerCmd msg
+        , getSearchResult model.termInput
+        ]
+
+updateModel : Msg -> Model -> Model
+updateModel msg model =
     case msg of
         Change newContent ->
-            ({ model | content = newContent }, Cmd.none)
+            { model | content = newContent }
         Name name ->
-            ({ model | name = name }, Cmd.none)
+            { model | name = name }
         Password password ->
-            ({ model | password = password }, Cmd.none)
+            { model | password = password }
         PasswordAgain password ->
-            ({ model | passwordAgain = password }, Cmd.none)
-        Roll ->
-            (model, Random.generate NewFace (Random.int 1 100))
-        NewFace newFace ->
-            --(Model "" "" "" "" newFace "" "", Cmd.none)
-            ({ model | diceRoller = { dieFace = newFace} }, Cmd.none)
+            { model | passwordAgain = password }
+        MsgForDiceRoller msg ->
+            { model | diceRoller = updateDiceRoller msg model.diceRoller}
         SearchImages ->
-            (model, getSearchResult model.termInput)
+            model
         NewSearchResult (Ok newResult) ->
-            ( { model | termResult = newResult }, Cmd.none )
+            { model | termResult = newResult }
         NewSearchResult (Err _) ->
-            (model, Cmd.none)
+            model
         ChangeTermInput term ->
-            ({ model | termInput = term}, Cmd.none)
+            { model | termInput = term}
+
+update : Msg -> Model -> (Model, Cmd Msg)
+update msg model =
+    (updateModel msg model, updateCmd msg model)
 
 getSearchResult : String -> Cmd Msg
 getSearchResult term =
