@@ -88,6 +88,7 @@ TODO
 * DONE page title -> "Elmsta (Elm Demo)"
 
 * refactor https://medium.com/@_rchaves_/structured-todomvc-example-with-elm-a68d87cd38da
+* test debug log statements
 * add input element that responds to keydown
 * fetch results from API
 * subscribe to changes from the API
