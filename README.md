@@ -8,17 +8,22 @@ Testing out Elm and answering questions like:
 
 * If Elm can compile to JavaScript, can it be used on the back-end? Would this make any sense? -> does not look like it
 * Integrating State containers (e.g. Redux) -> should not be needed since Elm is prior-art for Redux
+* Integrating Reactive Extensions? [2 minute introduction to Rx](https://medium.com/@andrestaltz/2-minute-introduction-to-rx-24c8ca793877) by Andre Staltz (“Think of an Observable as an asynchronous immutable array.”)
 * DONE Syntax highlighting in different editors (Webstorm OK, Sublime OK)
 * DONE Integrating Bootstrap (elm bootstrap, Card can't contain arbitrary content)
-* How does it integrate into e.g. a pre-existing angular environment? -> You can export as a JavaScript module instead of html and integrate it and interact with it via ports. To be tested.
-* Can I reuse any testing tools like Karma/Testing or is there an alternative?
+* DONE test time travel debug (elm native)
+* Build process (beyond elm-reactor)
+* test Elm Js interop
+
+## Open questions
+
+* String interpolation possible?
+* Test coverage?
+* Time travel debugging: only possible to do move between states or also to export/import? 
 * How do modules work? Can I use Webpack? How do I import modules other than Elm (e.g. img/font assets)? -> 
     see https://www.elm-tutorial.org/en/04-starting/03-webpack-1.html
-* Integrating Reactive Extensions? [2 minute introduction to Rx](https://medium.com/@andrestaltz/2-minute-introduction-to-rx-24c8ca793877) by Andre Staltz (“Think of an Observable as an asynchronous immutable array.”)
-* Build process (beyond elm-reactor)
-* test time travel debug (elm native)
-* test Elm Js interop
-* String interpolation possible?
+* How does it integrate into e.g. a pre-existing angular environment? -> You can export as a JavaScript module instead of html and integrate it and interact with it via ports. To be tested.
+* Can I reuse any testing tools like Karma/Testing or is there an alternative?
 
 ## Reference
 
@@ -80,6 +85,7 @@ Example Response:
 TODO
 
 * DONE link back to github (side banner/fork me on github)
+* DONE page title -> "Elmsta (Elm Demo)"
 
 * refactor https://medium.com/@_rchaves_/structured-todomvc-example-with-elm-a68d87cd38da
 * add input element that responds to keydown
@@ -87,8 +93,7 @@ TODO
 * subscribe to changes from the API
 * render the result
 * webpack
-* unit tests
+* unit tests https://github.com/elm-community/elm-test
 * search on key up (reactively)
 * reactive test/excel example
-* page title -> "Elmsta (Elm Demo)"
 * websockets
