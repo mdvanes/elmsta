@@ -13046,9 +13046,12 @@ var _mdvanes$elmsta$Main$decodeGifUrl = A2(
 		}
 	},
 	_elm_lang$core$Json_Decode$string);
+var _mdvanes$elmsta$Main$DiceRoller = function (a) {
+	return {dieFace: a};
+};
 var _mdvanes$elmsta$Main$Model = F7(
 	function (a, b, c, d, e, f, g) {
-		return {content: a, name: b, password: c, passwordAgain: d, dieFace: e, termInput: f, termResult: g};
+		return {content: a, name: b, password: c, passwordAgain: d, diceRoller: e, termInput: f, termResult: g};
 	});
 var _mdvanes$elmsta$Main$init = {
 	ctor: '_Tuple2',
@@ -13058,7 +13061,7 @@ var _mdvanes$elmsta$Main$init = {
 		'',
 		'',
 		'',
-		1,
+		_mdvanes$elmsta$Main$DiceRoller(1),
 		'Elm',
 		{ctor: '[]'}),
 	_1: _elm_lang$core$Platform_Cmd$none
@@ -13128,7 +13131,9 @@ var _mdvanes$elmsta$Main$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{dieFace: _p1._0}),
+						{
+							diceRoller: {dieFace: _p1._0}
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'SearchImages':
@@ -13456,7 +13461,7 @@ var _mdvanes$elmsta$Main$view = function (model) {
 																{
 																	ctor: '::',
 																	_0: _elm_lang$html$Html$text(
-																		_elm_lang$core$Basics$toString(model.dieFace)),
+																		_elm_lang$core$Basics$toString(model.diceRoller.dieFace)),
 																	_1: {ctor: '[]'}
 																}),
 															_1: {ctor: '[]'}
