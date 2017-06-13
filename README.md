@@ -6,15 +6,15 @@ Compiled page is hosted on: https://mdvanes.github.io/elmsta/
 
 Testing out Elm and answering questions like:
 
-* How does it integrate into e.g. a pre-existing angular environment?
+* If Elm can compile to JavaScript, can it be used on the back-end? Would this make any sense? -> does not look like it
+* Integrating State containers (e.g. Redux) -> should not be needed since Elm is prior-art for Redux
+* DONE Syntax highlighting in different editors (Webstorm OK, Sublime OK)
+* DONE Integrating Bootstrap (elm bootstrap, Card can't contain arbitrary content)
+* How does it integrate into e.g. a pre-existing angular environment? -> You can export as a JavaScript module instead of html and integrate it and interact with it via ports. To be tested.
 * Can I reuse any testing tools like Karma/Testing or is there an alternative?
 * How do modules work? Can I use Webpack? How do I import modules other than Elm (e.g. img/font assets)? -> 
     see https://www.elm-tutorial.org/en/04-starting/03-webpack-1.html
-* Integrating Bootstrap (elm bootstrap)
-* If Elm can compile to JavaScript, can it be used on the back-end? Would this make any sense?
 * Integrating Reactive Extensions? [2 minute introduction to Rx](https://medium.com/@andrestaltz/2-minute-introduction-to-rx-24c8ca793877) by Andre Staltz (“Think of an Observable as an asynchronous immutable array.”)
-* Integrating State containers (e.g. Redux)
-* Syntax highlighting in different editors (Webstorm, Sublime)
 * Build process (beyond elm-reactor)
 * test time travel debug (elm native)
 * test Elm Js interop
@@ -32,7 +32,8 @@ Testing out Elm and answering questions like:
 * `npm install -g elm`
 * installation: `elm package install`
 * run: `elm reactor` (or `elm reactor -p 8100`)
-* build for production: `elm make app/Main.elm --output=docs/index.html`
+* build module for production: `elm make app/Main.elm --output=docs/main.js`
+* build HTML for production: `elm make app/Main.elm --output=docs/test.html`
 
 ## Use case
 

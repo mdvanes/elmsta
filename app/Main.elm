@@ -9,6 +9,14 @@ import Components.Foo exposing (myAdder)
 import Random
 import Regex
 
+import Bootstrap.CDN as CDN
+import Bootstrap.Grid as Grid
+import Bootstrap.Grid.Col as Col
+import Bootstrap.Alert as Alert
+import Bootstrap.Card as Card
+import Bootstrap.Form as Form
+import Bootstrap.Form.Input as Input
+
 -- Continue tutorial at Effects/Time
 
 -- Not possible at the moment: https://groups.google.com/forum/#!topic/elm-discuss/khUMddCweEw
@@ -119,8 +127,65 @@ subscriptions model =
 -- VIEW
 view : Model -> Html Msg
 view model =
-  div []
-    [ a [ href "https://github.com/mdvanes/elmsta" ]
+    div []
+    [ viewGithubBanner
+    , Grid.container []
+        [ CDN.stylesheet
+        , div []
+            [ h1 [ style[("font-family", "sans-serif"), ("margin", "1rem")] ] [text "Elm Test Page"]
+            , viewPanel
+                [ Grid.row []
+                    [ Grid.col [ Col.xs12, Col.md6 ]
+                        [ Form.group []
+                            [ Input.text [ Input.attrs
+                                [ placeholder "Reverse text"
+                                , onInput Change ] ]
+                            ]
+                        ]
+                    , Grid.col [ Col.xs12, Col.md6 ]
+                        [ text (String.reverse model.content) ]
+                    ]
+                ]
+        , viewPanel
+            [ Grid.row []
+                [ Grid.col [ Col.xs12, Col.md6 ]
+                    [ Form.form []
+                        [ Form.group []
+                            [ Form.label [] [ text "Name" ]
+                            , Input.text [ Input.attrs [ placeholder "Type your name here", onInput Name ] ]
+                            ]
+                        , Form.group []
+                            [ Form.label [] [ text "Password" ]
+                            , Input.text [ Input.attrs [ type_ "password", onInput Password ] ]
+                            ]
+                        , Form.group []
+                            [ Form.label [] [ text "Re-enter Password" ]
+                            , Input.text [ Input.attrs [ type_ "password", onInput PasswordAgain ] ]
+                            ]
+                        ]
+                    ]
+                ]
+            , viewValidation model
+            ]
+        , viewPanel [ button [ onClick Roll ] [ text "Roll 100-sided dice" ]
+            , h2 [] [text (toString model.dieFace) ]
+            ]
+        , viewPanel [ h2 [ style[("font-family", "sans-serif")] ] [text (String.append "Searching " model.termInput)]
+            , input [placeholder "Elmsta search term", onInput ChangeTermInput, value model.termInput] []
+            , br [] []
+            -- , img [src model.termResult] []
+            -- , div [] [ text (String.join ";" model.termResult) ]
+            , viewTermResultList model
+            , br [] []
+            , button [ onClick SearchImages ] [ text "Search Wiki" ]
+            ]
+        ]
+        ]
+    ]
+
+viewGithubBanner : Html msg
+viewGithubBanner =
+    a [ href "https://github.com/mdvanes/elmsta" ]
         [ img
             [ src "https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
             , style[("position", "absolute"), ("top", "0"), ("right", "0"), ("border", "0")]
@@ -129,28 +194,6 @@ view model =
             ]
             []
         ]
-    , h1 [ style[("font-family", "sans-serif"), ("margin", "1rem")] ] [text "Elm Test Page"]
-    , viewPanel [ input [placeholder "Elmsta", onInput Change] []
-        , div [] [ text (String.reverse model.content) ]
-        ]
-    , viewPanel [ input [ type_ "text", placeholder "Name", onInput Name ] []
-        , input [ type_ "password", placeholder "Password", onInput Password ] []
-        , input [ type_ "password", placeholder "Re-enter Password", onInput PasswordAgain ] []
-        , viewValidation model
-        ]
-    , viewPanel [ button [ onClick Roll ] [ text "Roll 100-sided dice" ]
-        , h2 [] [text (toString model.diceRoller.dieFace) ]
-        ]
-    , viewPanel [ h2 [ style[("font-family", "sans-serif")] ] [text (String.append "Searching " model.termInput)]
-        , input [placeholder "Elmsta search term", onInput ChangeTermInput, value model.termInput] []
-        , br [] []
-        -- , img [src model.termResult] []
-        -- , div [] [ text (String.join ";" model.termResult) ]
-        , viewTermResultList model
-        , br [] []
-        , button [ onClick SearchImages ] [ text "Search Wiki" ]
-        ]
-    ]
 
 viewPanel : List (Html msg) -> Html msg
 viewPanel msg =
@@ -159,6 +202,17 @@ viewPanel msg =
         , ("margin", "1rem")
         , ("padding", "1.5rem")
         ] ] msg
+    --Card.config [ Card.attrs [] ]
+    --    --|> Card.header []
+    --    --    [ h2 [] [ text "header" ]
+    --    --    ]
+    --    |> Card.block []
+    --        [ Card.custom <|
+    --            msg
+    --        ]
+    --    |> Card.view
+
+
 
 viewTermResultList : Model -> Html msg
 viewTermResultList model =
@@ -170,14 +224,16 @@ viewTermResultList model =
 viewValidation : Model -> Html msg
 viewValidation model =
   let
-    (color, message) =
+    (color, message, alerttype) =
       if Regex.contains (Regex.regex "[=!-]") model.password then
-        ("red", "Passwords must contain not contain: =, !, -")
+        ("red", "Passwords must contain not contain: =, !, -", Alert.danger)
       else if (String.length model.password) <= 8 then
-        ("red", "Passwords must be longer than 8 chars")
+        ("red", "Passwords must be longer than 8 chars", Alert.danger)
       else if model.password /= model.passwordAgain then
-        ("red", "Passwords do not match!")
+        ("red", "Passwords do not match!", Alert.danger)
       else
-        ("green", "OK")
+        ("green", "OK", Alert.success)
   in
-    div [ style [("color", color), ("font-family", "sans-serif")] ] [ text message ]
+    div [ style [("color", color), ("font-family", "sans-serif")] ]
+        -- [ text message
+        [ alerttype [ text message ] ]
