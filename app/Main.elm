@@ -168,7 +168,7 @@ view model =
             , viewValidation model
             ]
         , viewPanel [ button [ onClick Roll ] [ text "Roll 100-sided dice" ]
-            , h2 [] [text (toString model.dieFace) ]
+            , h2 [] [text (toString model.diceRoller.dieFace) ]
             ]
         , viewPanel [ h2 [ style[("font-family", "sans-serif")] ] [text (String.append "Searching " model.termInput)]
             , input [placeholder "Elmsta search term", onInput ChangeTermInput, value model.termInput] []
