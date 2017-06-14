@@ -14,6 +14,10 @@ import DiceRoller.Model exposing (..)
 import DiceRoller.Msg exposing (..)
 import DiceRoller.Update exposing (..)
 
+import Panel.View exposing (..)
+import GithubBanner.View exposing (..)
+import DiceRoller.View exposing (..)
+
 import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
@@ -165,10 +169,7 @@ view model =
                 ]
             , viewValidation model
             ]
-        -- TODO extract DiceRoller view
-        , viewPanel [ button [ onClick (MsgForDiceRoller Roll) ] [ text "Roll 100-sided dice" ]
-            , h2 [] [text (toString model.diceRoller.dieFace) ]
-            ]
+        , viewDiceRoller model.diceRoller
         , viewPanel [ h2 [ style[("font-family", "sans-serif")] ] [text (String.append "Searching " model.termInput)]
             , input [placeholder "Elmsta search term", onInput ChangeTermInput, value model.termInput] []
             , br [] []
@@ -181,36 +182,6 @@ view model =
         ]
         ]
     ]
-
-viewGithubBanner : Html msg
-viewGithubBanner =
-    a [ href "https://github.com/mdvanes/elmsta" ]
-        [ img
-            [ src "https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-            , style[("position", "absolute"), ("top", "0"), ("right", "0"), ("border", "0")]
-            , alt "Fork me on GitHub"
-            , attribute "data-canonical-src" "https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
-            ]
-            []
-        ]
-
-viewPanel : List (Html msg) -> Html msg
-viewPanel msg =
-    section [ style[ ("border", "1px solid black")
-        , ("background-color", "aliceblue")
-        , ("margin", "1rem")
-        , ("padding", "1.5rem")
-        ] ] msg
-    --Card.config [ Card.attrs [] ]
-    --    --|> Card.header []
-    --    --    [ h2 [] [ text "header" ]
-    --    --    ]
-    --    |> Card.block []
-    --        [ Card.custom <|
-    --            msg
-    --        ]
-    --    |> Card.view
-
 
 
 viewTermResultList : Model -> Html msg
