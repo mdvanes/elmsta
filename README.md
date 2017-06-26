@@ -24,6 +24,7 @@ Testing out Elm and answering questions like:
     see https://www.elm-tutorial.org/en/04-starting/03-webpack-1.html
 * How does it integrate into e.g. a pre-existing angular environment? -> You can export as a JavaScript module instead of html and integrate it and interact with it via ports. To be tested.
 * Can I reuse any testing tools like Karma/Testing or is there an alternative?
+* Elm source maps?
 
 ## Reference
 
